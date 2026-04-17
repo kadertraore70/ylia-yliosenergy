@@ -390,8 +390,8 @@ async function yliaReply(userMsg){
   chatHistory.push({role:'user',content:userMsg});showTyping();
   await new Promise(r=>setTimeout(r,Math.min(1500+userMsg.length*18,3500)));
   try{
-    const res=await fetch('https://api.anthropic.com/v1/messages',{method:'POST',
-      headers:{'Content-Type':'application/json','anthropic-dangerous-direct-browser-access':'true'},
+const res=await fetch('/api/chat',{method:'POST',
+      headers:{'Content-Type':'application/json'},
       body:JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:1300,system:YLIA_PROMPT,messages:chatHistory})});
     const data=await res.json();hideTyping();
     const reply=data.content?.[0]?.text||'Désolé, une erreur est survenue. Réessayez 🙏';
